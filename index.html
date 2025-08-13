@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="it">
+
+    <head>
+
+    <meta charset="UTF-8">
+
+    <!-- TITOLO DELLA PAGINA -->
+    <title>Qualità Aria Firenze</title>
+
+    <!-- RICHIAMO STILI CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="libs/leaflet.css">
+
+    <!-- RICHIAMO SCRIPT E LIBRERIE JS -->
+    <script src="libs/jquery.min.js"></script>
+    <script src="libs/leaflet.js"></script>
+    <script src="libs/chart.min.js"></script>
+    <script src="app.js"></script>
+
+    </head>
+
+    <body>
+
+    <h1>Qualità dell'Aria a Firenze</h1>
+
+    <!-- MAPPA FOCALIZZATA SULLA CITTA' DI FIRENZE -->
+    <div id="map"></div>
+
+    <!-- ELEMENTI DELLA MAPPA -->
+    <div id="info">
+
+        <h2>Dettagli Sensore</h2>
+        <div id="sensorDetails"></div>
+        <canvas id="weeklyChart"></canvas>
+
+    </div>
+    
+    </body>
+
+</html>
