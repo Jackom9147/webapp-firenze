@@ -80,6 +80,7 @@ footer {
 
 @media screen and (max-width: 480px) {
     .stemma-firenze{display: none;}
+    .contTotMapFirenze > div, #map{height:400px;}
 }
 
 @media screen and (max-width: 1024px) {
