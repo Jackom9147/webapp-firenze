@@ -1,8 +1,40 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
 body {
   font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   margin: 0;
   display: flex;
   flex-direction: column;
+}
+
+header{
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+h1 {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size:35px;
+    margin-bottom: 5px;
+}
+
+h2{
+    color:#C30D26;
+    font-size: 25px;
+}
+
+img.stemma-firenze {
+    height: 45px;
 }
 
 #map {
@@ -11,10 +43,71 @@ body {
 }
 
 #info {
-  padding: 10px;
+  padding: 20px;
   background: #f8f8f8;
 }
 
 canvas {
   margin-top: 10px;
+}
+
+.contTotMapFirenze > div {
+    height: 500px;
+    background: #f8f8f8;
+    max-height: 500px;
+    overflow: auto;
+}
+
+div#sensorDetails i {
+    font-size: 15px;
+}
+
+header p{margin-top:0;}
+
+main{
+    flex: 1;
+    padding: 0 20px;
+}
+
+footer {
+    float: left;
+    width: 100%;
+    margin-top: 35px;
+    text-align: center;
+    border-top: 1px solid #ccc;
+    font-size: 12px;
+}
+
+@media screen and (max-width: 1024px) {
+    .contTotMapFirenze {
+        margin-top: 35px;
+    }
+
+    .contDetsMappFirenze{
+        border-top:2px solid #333;
+    }
+}
+
+
+@media screen and (min-width: 1024px) {
+
+    main{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .contTotMapFirenze {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-column-gap: 20px;
+        width: 100vw;
+        max-width: 100%;
+        margin: 0 auto;
+    }
+
+    .contDetsMappFirenze{
+        border-left:2px solid #333;
+    }
+    
 }

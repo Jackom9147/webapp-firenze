@@ -6,82 +6,64 @@ $(document).ready(function () {
 
     let preferiti = JSON.parse(localStorage.getItem("preferiti")) || [];
 
-    // Funzione per salvare preferiti
     function salvaPreferiti() {
         localStorage.setItem("preferiti", JSON.stringify(preferiti));
     }
 
-    // Carica sensori
-    $.getJSON("https://www.snap4city.org/api/iot-search?model=ArpatSensor", function (data) {
-        // Se non abbiamo preferiti salvati, prendiamo i primi 5
+    function formatUTC(dateString) {
+        if (!dateString) return "Data non disponibile";
+        const d = new Date(dateString);
+        return `${String(d.getUTCDate()).padStart(2, '0')}/${
+            String(d.getUTCMonth() + 1).padStart(2, '0')}/${
+            d.getUTCFullYear()} ${String(d.getUTCHours()).padStart(2, '0')}:${
+            String(d.getUTCMinutes()).padStart(2, '0')}`;
+    }
+
+    $.getJSON("https://servicemap.disit.org/WebAppGrafo/api/v1/iot-search/?model=ArpatSensor", function (data) {
+        const features = data.features || [];
+
+        // Filtra solo i sensori di Firenze (deviceName che inizia per FI-)
+        const sensoriFirenze = features.filter(f => 
+            f.properties?.deviceName && f.properties.deviceName.startsWith("FI-")
+        );
+
+        // Se preferiti è vuoto, inizializza con tutti i sensori di Firenze
         if (preferiti.length === 0) {
-            preferiti = data.slice(0, 5).map(s => s.id);
+            preferiti = sensoriFirenze.map(f => f.properties.serviceUri);
             salvaPreferiti();
         }
 
-        data.forEach(sensor => {
-            if (preferiti.includes(sensor.id)) {
-                const marker = L.marker([sensor.latitude, sensor.longitude]).addTo(map);
+        let bounds = [];
 
-                marker.on('click', function () {
-                    caricaDatiSensore(sensor);
-                });
-            }
-        });
-    });
+        sensoriFirenze.forEach(f => {
+            const lat = f.geometry?.coordinates[1];
+            const lon = f.geometry?.coordinates[0];
+            const nome = f.properties.deviceName;
+            const valori = f.properties.values || {};
+            const dataAcquisizione = f.properties.date_time || f.properties.values?.dateObserved;
 
-    // Funzione per caricare ultimi dati e grafico
-    function caricaDatiSensore(sensor) {
-        $.getJSON(`https://www.snap4city.org/api/device/${sensor.id}/lastdata`, function (lastData) {
-            let infoHtml = `<h3>${sensor.name}</h3>`;
+            let popupContent = `<h3>${nome}</h3>`;
+            popupContent += `Data acquisizione: ${formatUTC(dataAcquisizione)}`;
             let variabilePrincipale = null;
 
-            lastData.forEach(d => {
-                infoHtml += `<p>${d.variable}: ${d.value} ${d.unit} (${d.timestamp})</p>`;
-                if (!variabilePrincipale) variabilePrincipale = d.variable;
-            });
-
-            $('#sensorDetails').html(infoHtml);
-
-            if (variabilePrincipale) {
-                caricaGraficoSettimanale(sensor.id, variabilePrincipale);
-            }
-        });
-    }
-
-    // Funzione per grafico settimanale
-    function caricaGraficoSettimanale(sensorId, variabile) {
-        const oggi = new Date();
-        const inizio = new Date();
-        inizio.setDate(oggi.getDate() - 7);
-
-        const from = inizio.toISOString();
-        const to = oggi.toISOString();
-
-        $.getJSON(`https://www.snap4city.org/api/device/${sensorId}/history?variable=${variabile}&from=${from}&to=${to}`, function (historyData) {
-            const labels = historyData.map(d => new Date(d.timestamp).toLocaleString());
-            const values = historyData.map(d => d.value);
-
-            const ctx = document.getElementById('weeklyChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: variabile,
-                        data: values,
-                        borderColor: 'blue',
-                        fill: false
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        x: { display: true },
-                        y: { display: true }
-                    }
+            for (let key in valori) {
+                if (valori[key] !== "" && key !== "validation" && key !== "dateObserved") {
+                    popupContent += `<p>${key}: ${valori[key]}</p>`;
+                    if (!variabilePrincipale) variabilePrincipale = key;
                 }
+            }
+
+            const marker = L.marker([lat, lon]).addTo(map);
+            bounds.push([lat, lon]);
+
+            marker.on('click', function () {
+                $('#sensorDetails').html(popupContent);
             });
         });
-    }
+
+        // Adatta la mappa a tutti i marker
+        if (bounds.length > 0) {
+            map.fitBounds(bounds);
+        }
+    });
 });

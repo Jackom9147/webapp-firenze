@@ -15,26 +15,44 @@
     <!-- RICHIAMO SCRIPT E LIBRERIE JS -->
     <script src="libs/jquery.min.js"></script>
     <script src="libs/leaflet.js"></script>
-    <script src="libs/chart.min.js"></script>
     <script src="app.js"></script>
 
     </head>
 
     <body>
 
-    <h1>Qualità dell'Aria a Firenze</h1>
+    <header>
+        <h1>Qualità dell'Aria a Firenze <img class="stemma-firenze" src="libs/images/stemma-firenze.jpg" alt="logo firenze" /></h1>
+        <p>Dati aggiornati dai sensori ambientali per conoscere la qualità dell’aria a Firenze e nei comuni limitrofi.</p>
+    </header>
 
-    <!-- MAPPA FOCALIZZATA SULLA CITTA' DI FIRENZE -->
-    <div id="map"></div>
+    <main>
 
-    <!-- ELEMENTI DELLA MAPPA -->
-    <div id="info">
+        <div class="contTotMapFirenze">
 
-        <h2>Dettagli Sensore</h2>
-        <div id="sensorDetails"></div>
-        <canvas id="weeklyChart"></canvas>
+            <div class="contMappFirenze">
+                <!-- MAPPA FOCALIZZATA SULLA CITTA' DI FIRENZE -->
+                <div id="map"></div>
+            </div>
 
-    </div>
+            <div class="contDetsMappFirenze">
+                <!-- ELEMENTI DELLA MAPPA -->
+                <div id="info">
+
+                    <h2>Dettagli Sensore</h2>
+                    <div id="sensorDetails"><i>Clicca su un sensore nella mappa per vedere gli ultimi dati sulla qualità dell’aria a Firenze e provincia.</i></div>
+                    <canvas id="weeklyChart"></canvas>
+
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer>
+        <p>Copyright © 2025 SNAP4. Tutti i diritti sono riservati.</p>
+    </footer>
     
     </body>
 
