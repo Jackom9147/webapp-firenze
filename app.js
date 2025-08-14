@@ -58,7 +58,16 @@ $(document).ready(function () {
 
             marker.on('click', function () {
                 $('#sensorDetails').html(popupContent);
+
+                // Controlla se lo schermo è sotto i 1024px
+                if (window.innerWidth < 1024) {
+                    const infoDiv = document.getElementById('info');
+                    if (infoDiv) {
+                        infoDiv.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
             });
+
         });
 
         // Adatta la mappa a tutti i marker
