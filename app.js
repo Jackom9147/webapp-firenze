@@ -56,10 +56,41 @@ $(document).ready(function () {
             const marker = L.marker([lat, lon]).addTo(map);
             bounds.push([lat, lon]);
 
+            // --- LOGICA DIFFERENZIATA DESKTOP / MOBILE ---
+            if (window.innerWidth >= 1024) {
+                // DESKTOP: popup all'hover, sparisce all'uscita
+                marker.bindPopup(nome, {
+                    closeButton: false,
+                    autoClose: false,
+                    closeOnClick: false
+                });
+
+                marker.on('mouseover', function () {
+                    marker.openPopup();
+                });
+
+                marker.on('mouseout', function () {
+                    marker.closePopup();
+                });
+
+            } else {
+                // MOBILE: popup al click, resta aperto con X
+                marker.bindPopup(nome, {
+                    closeButton: true,
+                    autoClose: true,
+                    closeOnClick: true
+                });
+
+                marker.on('click', function () {
+                    marker.openPopup();
+                });
+            }
+
+            // Click (sia desktop che mobile) per mostrare i dettagli nella sidebar
             marker.on('click', function () {
                 $('#sensorDetails').html(popupContent);
 
-                // Controlla se lo schermo è sotto i 1024px
+                // Scroll automatico su mobile
                 if (window.innerWidth < 1024) {
                     const infoDiv = document.getElementById('info');
                     if (infoDiv) {
