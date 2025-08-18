@@ -1,129 +1,153 @@
+/* Reset base */
 * {
-    box-sizing: border-box;
-}
-
-html, body {
-    height: 100%;
-    margin: 0;
+  box-sizing: border-box;
 }
 
 body {
-  font-family: Arial, sans-serif;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
   margin: 0;
+  padding: 0 15px;
+  min-height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  padding:0 15px;
+  font-family: Arial, sans-serif;
+
   border-top: 2px solid #C30D26;
+
+  background: linear-gradient(to bottom, rgba(255, 238, 207, 0.75), #ffffff),
+              url("libs/images/firenze-hd.jpeg") no-repeat center center fixed;
+  background-size: cover;
 }
 
-header{
-    text-align: center;
-    margin-bottom: 15px;
+/* Layout principali */
+header {
+  text-align: center;
+  margin: 0 0 15px 0;
+}
+
+header p {
+  margin-top: 0;
 }
 
 h1 {
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    font-size:35px;
-    margin-bottom: 5px;
+  margin: 0 0 5px 0;
+  font-size: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
-h2{
-    color:#C30D26;
-    font-size: 25px;
+h2 {
+  font-size: 25px;
+  color: #C30D26;
 }
 
 img.stemma-firenze {
-    height: 45px;
+  height: 45px;
 }
 
 #map {
-  height: 500px;
   width: 100%;
+  height: 500px;
 }
 
 #info {
   padding: 20px;
-  background: #f8f8f8;
 }
 
 .contTotMapFirenze > div {
-    height: 500px;
-    background: #f8f8f8;
-    max-height: 500px;
+  height: 500px;
+  max-height: 500px;
+  background: #f8f8f8;
 }
 
 div#sensorDetails i {
-    font-size: 15px;
+  font-size: 15px;
 }
 
-header p{margin-top:0;}
-
-main{
-    flex: 1;
+main {
+  flex: 1;
 }
 
 footer {
-    float: left;
-    width: 100%;
-    margin-top: 35px;
-    text-align: center;
-    border-top: 1px solid #ccc;
-    font-size: 12px;
+  width: 100%;
+  margin-top: 35px;
+  padding-top: 10px;
+  text-align: center;
+  font-size: 12px;
+  border-top: 1px solid #ccc;
 }
 
+/* ------------------ MEDIA QUERIES ------------------ */
+
+/* Mobile piccolo */
 @media screen and (max-width: 480px) {
-    .stemma-firenze{display: none;}
-    .contTotMapFirenze > div, #map{height:300px;}
-    .contDetsMappFirenze{overflow-y:auto;}
+  .stemma-firenze {
+    display: none;
+  }
+
+  .contTotMapFirenze > div,
+  #map {
+    height: 300px;
+  }
+
+  .contDetsMappFirenze {
+    overflow-y: auto;
+  }
 }
 
+/* Tablet & Mobile */
 @media screen and (max-width: 1024px) {
-    .contTotMapFirenze {
-        margin-top: 15px;
-    }
+  .stemma-firenze-mobile {
+    margin: 0 auto;
+    padding-top: 15px;
+    height: 115px;
+  }
 
-    .contDetsMappFirenze{
-        border-top:2px solid #333;
-    }
+  .contTotMapFirenze {
+    margin-top: 15px;
+  }
 
-    header{margin:0;}
-    h1{margin-bottom: 15px;}
-    h2{margin-top: 0;}
+  body .contDetsMappFirenze {
+    margin-top: 25px;
+    border-top: 2px solid #333;
+    background-color: rgba(255, 255, 255, 0.3);
+  }
 
-    .contDetsMappFirenze {
-        margin-top: 25px;
-    }
+  header h1 {
+    margin: 10px 0;
+  }
 }
 
-
+/* Desktop */
 @media screen and (min-width: 1024px) {
+  header h1 {
+    margin-top: 8px;
+  }
 
-    main{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+  img.stemma-firenze-mobile {
+    padding-top: 15px;
+    height: 100px;
+  }
 
-    .contTotMapFirenze {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        grid-column-gap: 20px;
-        width: 100vw;
-        max-width: 100%;
-        margin: 0 auto;
-    }
+  main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-    .contDetsMappFirenze{
-        border-left:2px solid #333;
-    }
-    
+  .contTotMapFirenze {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-column-gap: 20px;
+    width: 100vw;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  body .contDetsMappFirenze {
+    border-left: 2px solid #333;
+    background-color: rgba(255, 255, 255, 0.5);
+  }
 }
-
-
