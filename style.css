@@ -11,9 +11,7 @@ body {
   display: flex;
   flex-direction: column;
   font-family: Arial, sans-serif;
-
   border-top: 2px solid #C30D26;
-
   background: linear-gradient(to bottom, rgba(255, 238, 207, 0.75), #ffffff),
               url("libs/images/firenze-hd.jpeg") no-repeat center center fixed;
   background-size: cover;
@@ -102,7 +100,7 @@ footer {
   .stemma-firenze-mobile {
     margin: 0 auto;
     padding-top: 15px;
-    height: 115px;
+    height: 95px;
   }
 
   .contTotMapFirenze {
@@ -122,6 +120,7 @@ footer {
   header p {
     margin-bottom:0;
   }
+
 }
 
 /* Desktop */
@@ -155,4 +154,3 @@ footer {
     background-color: rgba(255, 255, 255, 0.5);
   }
 }
-
